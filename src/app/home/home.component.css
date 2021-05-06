@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Girassol&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho&display=swap');
+.heading{
+    font-family: 'Girassol', cursive;
+    text-align: center;
+    margin-top: 0.1em;
+    padding-top: 1.8em;
+    padding-bottom: 1.0em;
+    color: black;
+    background-image: url(https://psmarketingimages.s3.amazonaws.com/blog/wp-content/uploads/2018/06/06152417/Untitled-design-13-11.jpg) ;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+}
+
+.paraText{
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.5em;
+    /* color: rgb(59, 63, 54); */
+    color:rgb(255, 254, 254);
+    /* font-weight: bold; */
+}
+.dark{ 
+    background-color: rgb(121, 118, 118);
+} 

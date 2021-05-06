@@ -1,0 +1,121 @@
+<!-- Heading -->
+<div>
+    <p class="display-2 heading">Participants </p>
+</div>
+<div class="container text-light">
+     <h1>{{heading}}</h1>
+    <hr />
+</div>
+<!-- Search Bar -->
+<div class="pb-4 container"> 
+    <form class="form-inline">
+        <input class="shadow form-control mr-sm-2 ml-auto" type="search" name="search" placeholder="Search"
+            aria-label="Search" [(ngModel)]="searchKey">
+        <button class="shadow btn btn-outline-success my-4 my-sm-0" type="submit"
+            (click)="searchParticipant(searchKey)">Search</button>
+    </form>
+</div>
+<!-- Optional search results -->
+<div class="container text-light" *ngIf="isSearched">
+    <p>{{searchResult}}</p>
+    <table class="table table-hover table-success" *ngIf="isFound">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>{{searchResponce.id}}</th>
+                <td>{{searchResponce.firstName}}&nbsp;{{searchResponce.lastName}}</td>
+                <td>{{searchResponce.username}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="center text-light btn btn-sm btn-outline-secondary mt-3 px-5" (click)="toogleDisplay()">Show all participant</button>
+</div>
+<!-- All participants -->
+<div class="container text-light" *ngIf="displayParticipant" >
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">FirstName</th>
+                <th scope="col">LastName</th>
+                <th scope="col">UserName</th>
+                <th scope="col">Modify</th>
+                <th scope="col">Remove</th>
+                
+            </tr>
+        </thead>
+        <tbody *ngFor="let participant of allParticipant; let index = index">
+            <tr
+                [ngClass]="{'table-danger': 0 === index % 3, 'table-success': 1 === index % 3, 'table-primary': 2 === index % 3}">
+                <th>{{participant.id}}</th>
+                <td>{{participant.firstName}}</td>
+                <td>{{participant.lastName}}</td>
+                <td>{{participant.username}}</td>
+                <td><button class="btn btn-sm btn-info" (click)="showForm2()">Update Participant</button></td>
+                <td><button class="btn btn-sm btn-danger" (click)="removeParticipant(participant.id)">Remove Participant</button></td>
+                
+            </tr>
+        </tbody>
+    </table>
+    <p class="mb-5 center">{{allParticipant.length}}&nbsp;participants showing.</p>
+</div>
+    
+<!-- Getting add form -->
+<div class="container text-light" *ngIf="!isAdding">
+    <button class="btn btn-primary px-5" (click)="showForm()">Add Participant</button>
+</div>
+    <!-- Adding Participant -->
+<div class="container text-light" *ngIf="isAdding">
+    <p>Enter the data below:</p>
+
+    <form (ngSubmit)="addParticipant()" #userForm="ngForm">
+        <input type="text" class="form-group form-control mb-1" id="name" required [(ngModel)]="tempParticipant.firstname"
+            name="name" #name="ngModel" placeholder="Participant First Name" autofocus>
+
+            <input type="text" class="form-group form-control mb-1" id="name" required [(ngModel)]="tempParticipant.lastname"
+            name="name" #name="ngModel" placeholder="Participant Last Name" autofocus>
+
+            <input type="text" class="form-group form-control mb-1" id="name" required [(ngModel)]="tempParticipant.username"
+            name="name" #name="ngModel" placeholder="Participant UserName" autofocus>
+
+
+        <button class="mt-4 btn btn-lg btn-primary" type="submit" [disabled]=" !userForm.form.valid">Add Participant</button>
+    </form>
+    <button class="center btn btn-sm btn-outline-secondary mt-3 px-5" (click)="toogleDisplay()">Show all Participant</button>
+</div>
+
+
+<!-- Getting update form -->
+<!-- <div class="container text-light" *ngIf="!isUpdating">
+    <button class="btn btn-primary px-5" (click)="showForm2()">Update Participant</button>
+</div> -->
+    <!-- Updating Participant -->
+    <div class="container text-light" *ngIf="isUpdating">
+        <p>Enter the data below:</p>
+    
+        <form (ngSubmit)="updateParticipant()" #userForm="ngForm">
+            <input type="number" class="form-group form-control mb-1" id="name" required [(ngModel)]="tempParticipant.id"
+            name="name" #name="ngModel" placeholder="Participant id" autofocus>
+
+            <input type="text" class="form-group form-control mb-1" id="name" required [(ngModel)]="tempParticipant.firstname"
+                name="name" #name="ngModel" placeholder="Participant First Name" autofocus>
+    
+                <input type="text" class="form-group form-control mb-1" id="name" required [(ngModel)]="tempParticipant.lastname"
+                name="name" #name="ngModel" placeholder="Participant Last Name" autofocus>
+    
+                <input type="text" class="form-group form-control mb-1" id="name" required [(ngModel)]="tempParticipant.username"
+                name="name" #name="ngModel" placeholder="Participant UserName" autofocus>
+    
+    
+            <button class="mt-4 btn btn-lg btn-primary" type="submit" [disabled]=" !userForm.form.valid">Update Participant</button>
+        </form>
+        <button class="center btn btn-sm btn-outline-secondary mt-3 px-5" (click)="toogleDisplay()">Show all Participant</button>
+    </div>
+
+

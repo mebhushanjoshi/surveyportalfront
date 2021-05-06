@@ -1,0 +1,87 @@
+<!-- Heading -->
+<div>
+    <p class="display-2 heading">Topics </p>
+</div>
+<div class="container text-light">
+    <h1>{{heading}}</h1>
+    <hr />
+</div>
+<!-- Search Bar -->
+<div class="pb-4 container"> 
+    <form class="form-inline">
+        <input class="shadow form-control mr-sm-2 ml-auto" type="search" name="search" placeholder="Search"
+            aria-label="Search" [(ngModel)]="searchKey">
+        <button class="shadow btn btn-outline-success my-4 my-sm-0" type="submit"
+            (click)="searchTopic(searchKey)">Search</button>
+    </form>
+</div>
+<!-- Optional search results -->
+<div class="container text-light" *ngIf="isSearched">
+    <p>{{searchResult}}</p>
+    <table class="table table-hover table-success" *ngIf="isFound">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Created by</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>{{searchResponce.id}}</th>
+                <td>{{searchResponce.name}}</td>
+                <td>{{searchResponce.description}}</td>
+                <td>{{searchResponce.surveyor.firstName}}&nbsp;{{searchResponce.surveyor.lastName}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="center text-light btn btn-sm btn-outline-secondary mt-3 px-5" (click)="toogleDisplay()">Show all topic</button>
+</div>
+<!-- All topics -->
+<div class="container text-light" *ngIf="displayTopic">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Created by</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let topic of allTopics; let index = index">
+            <tr
+                [ngClass]="{'table-danger': 0 === index % 3, 'table-success': 1 === index % 3, 'table-primary': 2 === index % 3}">
+                <th>{{topic.id}}</th>
+                <td>{{topic.name}}</td>
+                <td>{{topic.description}}</td>
+                <td>{{topic.surveyor.firstName}}&nbsp;{{topic.surveyor.lastName}}</td>
+                <td><button class="btn btn-sm btn-danger" (click)="removeTopic(topic.id)">Remove Topic</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="mb-5 center">{{allTopics.length}}&nbsp;topics showing.</p>
+</div>
+<!-- Getting add form -->
+<div class="container text-light" *ngIf="!isAdding">
+    <button class="btn btn-primary px-5" (click)="showForm()">Add Topic</button>
+</div>
+<!-- Adding Topic -->
+<div class="container text-light" *ngIf="isAdding">
+    <p>Enter the data below:</p>
+
+    <form (ngSubmit)="addTopic()" #userForm="ngForm">
+        <input type="text" class="form-group form-control mb-1" id="name" required [(ngModel)]="tempTopic.name"
+            name="name" #name="ngModel" placeholder="Topic Name" autofocus>
+
+        <input type="text" class="mt-4 form-group form-control mb-1" id="description" required [(ngModel)]="tempTopic.description"
+            name="description" #name="ngModel" placeholder="Topic Description" autofocus>
+
+        <input type="text" class="mt-4 form-group form-control mb-1" id="surveyor" required [(ngModel)]="tempTopic.surveyorId"
+            name="surveyor" #name="ngModel" placeholder="Surveyor User id" autofocus>
+
+        <button class="mt-4 btn btn-lg btn-primary" type="submit" [disabled]=" !userForm.form.valid">Add Topic</button>
+    </form>
+    <button class="center btn btn-sm btn-outline-secondary mt-3 px-5" (click)="toogleDisplay()">Show all topic</button>
+</div>
